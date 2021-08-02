@@ -105,7 +105,7 @@ const BugReportingPage = () => {
 
   return (
     <Container fluid="lg">
-      <p>Hi</p>
+      <h2>Sponsee internal testing issue submission</h2>
       <Form>
         <Row className="mb-3">
           <Form.Group as={Col} controlId="firstName">
