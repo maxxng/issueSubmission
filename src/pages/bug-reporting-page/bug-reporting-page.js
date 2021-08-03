@@ -69,7 +69,7 @@ const formReducer = (state, action) => {
         ...state,
         actual: action.payload,
       };
-    case "rest":
+    case "reset":
       return {
         ...state,
         issue: " ",
@@ -86,6 +86,7 @@ const BugReportingPage = () => {
   const [state, dispatch] = useReducer(formReducer, initialState);
   const [isMissing, setIsMissing] = useState(false);
   const [feedback, setFeedback] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const isValidForm = () => {
     if (
@@ -241,8 +242,10 @@ const BugReportingPage = () => {
         <Button
           className="mb-5"
           variant="primary"
+          disabled={isLoading}
           onClick={() => {
             if (isValidForm()) {
+              setIsLoading(true);
               axios
                 .post(
                   "https://sponsee-public-backend.herokuapp.com/api/testFeedback/",
@@ -256,10 +259,12 @@ const BugReportingPage = () => {
                     ...currIssues,
                     state,
                   });
+
                   setIsMissing(false);
                   dispatch({
                     type: "reset",
                   });
+                  setIsLoading(false);
                 })
                 .catch(function (error) {
                   console.log(error);
